@@ -1,5 +1,6 @@
 ﻿using Atelier.Ef.Query.Entities;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 using var context = new NorthwindContext();
 
@@ -146,7 +147,47 @@ using var context = new NorthwindContext();
 //    Console.WriteLine($"{o.CustomerId} {o.Customer?.CompanyName}");
 //}
 
-foreach(var t in context.Territories)
-{
-    Console.WriteLine($"{t.TerritoryDescription} {t.Region.RegionDescription}");
-}
+//foreach(var t in context.Territories)
+//{
+//    Console.WriteLine($"{t.TerritoryDescription} {t.Region.RegionDescription}");
+//}
+
+//var result = context
+//    .Database
+//    .SqlQuery<double>($"select SUM((UnitPrice - UnitPrice* Discount)*Quantity) as Total from [Order Details]")
+//    .ToList()
+//    .Single();
+
+//Console.WriteLine(result);
+
+//foreach(var e in context.Employees
+//    .FromSql($"SELECT * FROM Employees WHERE FirstName LIKE '%an%'")
+//    .Where(e => e.LastName.Contains("io"))
+//    )
+//{
+//    Console.WriteLine($"{e.FirstName} {e.LastName}");
+//}
+
+//var company = "Arcodia Shipping";
+//var phone = "0123456789";
+//context.Database.ExecuteSql($"INSERT INTO [dbo].[Shippers]([CompanyName],[Phone])VALUES({company},{phone})");
+
+//Console.WriteLine("Entrez le nom de la compagnie (ex. Southwind shippers)");
+//var company = Console.ReadLine();
+//var sql = $"INSERT INTO [dbo].[Shippers]([CompanyName],[Phone])VALUES('{company}','4567')";
+//context.Database.ExecuteSqlRaw(sql);
+
+//Console.WriteLine("Entrez le nom de la compagnie (ex. Speedy Express ou ; CREATE TABLE Hacked ( Haxx0r INT PRIMARY KEY ) --");
+//var company = Console.ReadLine();
+//var sql = $"SELECT * from Shippers where CompanyName='{company}'";
+//foreach(var s in context.Shippers.FromSqlRaw(sql))
+//{
+//    Console.WriteLine($"{s.Phone}");
+//}
+
+//var beginDate = new DateTime(1996, 1, 1);
+
+//foreach (var d in context.Database.SqlQuery<SalesByYear>($"[Sales by Year] {beginDate}, {beginDate.AddYears(2)}"))
+//{
+//    Console.WriteLine($"{d.Year} {d.Subtotal}");
+//}
