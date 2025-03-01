@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Atelier.Ef.Query.Entities;
 
@@ -8,6 +9,7 @@ public partial class NorthwindContext : DbContext
 {
     public NorthwindContext()
     {
+
     }
 
     public NorthwindContext(DbContextOptions<NorthwindContext> options)
@@ -72,7 +74,7 @@ public partial class NorthwindContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder
-            .LogTo(Console.WriteLine)
+            .UseLoggerFactory(LoggerFactory.Create(b => b.AddConsole()))
             .UseSqlServer("Data Source=.;Initial Catalog=Northwind;Integrated Security=True;Application Name=EntityFramework; TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -601,6 +603,8 @@ public partial class NorthwindContext : DbContext
                 .HasForeignKey(d => d.RegionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Territories_Region");
+
+            entity.Navigation(e => e.Region).AutoInclude();
         });
 
         OnModelCreatingPartial(modelBuilder);

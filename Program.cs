@@ -1,4 +1,5 @@
 ﻿using Atelier.Ef.Query.Entities;
+using Microsoft.EntityFrameworkCore;
 
 using var context = new NorthwindContext();
 
@@ -85,7 +86,67 @@ using var context = new NorthwindContext();
 //    Console.WriteLine($"{c}");
 //}
 
-foreach (var c in context.Customers.AsEnumerable().Where(c => c.CustomerId.Sum(i => (int)i) == 368))
+//foreach (var c in context.Customers.AsEnumerable().Where(c => c.CustomerId.Sum(i => (int)i) == 368))
+//{
+//    Console.WriteLine($"{c.CustomerId}");
+//}
+
+//var employee = context.Employees.Single(e => e.FirstName == "Nancy" && e.LastName == "Davolio");
+
+//foreach(var o in employee.Orders)
+//{ 
+//    Console.WriteLine($"{o.CustomerId}"); 
+//}
+
+//var employee = context.Employees
+//    .Include(e => e.Orders)
+//    .Single(e => e.FirstName == "Nancy" && e.LastName == "Davolio");
+
+//foreach (var o in employee.Orders)
+//{
+//    Console.WriteLine($"{o.CustomerId}");
+//}
+
+//var employee = context.Employees
+//    .Include(e => e.Orders.Where(o => o.OrderDate >= new DateTime(1997,1,1) && o.OrderDate < new DateTime(1998, 1, 1)))
+//    .Single(e => e.FirstName == "Nancy" && e.LastName == "Davolio");
+
+//foreach (var o in employee.Orders)
+//{
+//    Console.WriteLine($"{o.CustomerId}");
+//}
+
+//var employee = context.Employees
+//    .Include(e => e.Orders)
+//    .ThenInclude(o => o.Customer)
+//    .Single(e => e.FirstName == "Nancy" && e.LastName == "Davolio");
+
+//foreach (var o in employee.Orders)
+//{
+//    Console.WriteLine($"{o.CustomerId} {o.Customer?.CompanyName}");
+//}
+
+//var employee = context.Employees
+//    .Include(e => e.Orders)
+//    .ThenInclude(o => o.Customer)
+//    .AsSplitQuery()
+//    .Single(e => e.FirstName == "Nancy" && e.LastName == "Davolio");
+
+//foreach (var o in employee.Orders)
+//{
+//    Console.WriteLine($"{o.CustomerId} {o.Customer?.CompanyName}");
+//}
+
+//var employee = context.Employees.Single(e => e.FirstName == "Nancy" && e.LastName == "Davolio");
+//Console.WriteLine("Charger les commandes ?");
+//Console.ReadLine();
+//context.Entry(employee).Collection(e => e.Orders).Load();
+//foreach (var o in employee.Orders)
+//{
+//    Console.WriteLine($"{o.CustomerId} {o.Customer?.CompanyName}");
+//}
+
+foreach(var t in context.Territories)
 {
-    Console.WriteLine($"{c.CustomerId}");
+    Console.WriteLine($"{t.TerritoryDescription} {t.Region.RegionDescription}");
 }
