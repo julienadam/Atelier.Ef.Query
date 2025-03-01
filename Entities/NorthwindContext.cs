@@ -70,7 +70,6 @@ public partial class NorthwindContext : DbContext
     public virtual DbSet<Supplier> Suppliers { get; set; }
 
     public virtual DbSet<Territory> Territories { get; set; }
-    public virtual DbSet<SalesByYear> SalesByYear { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -604,21 +603,10 @@ public partial class NorthwindContext : DbContext
                 .HasForeignKey(d => d.RegionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Territories_Region");
-
-            entity.Navigation(e => e.Region).AutoInclude();
         });
 
         OnModelCreatingPartial(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-}
-
-[Keyless]
-public class SalesByYear
-{
-    public DateTime ShippedDate { get; set; }
-    public int OrderID { get; set; }
-    public decimal Subtotal { get; set; }
-    public string Year { get; set; }
 }

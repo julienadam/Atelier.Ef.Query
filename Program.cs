@@ -4,6 +4,8 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 using var context = new NorthwindContext();
 
+// ATTENTION A DESACTIVER LES FILTRE GLOBAUX ET CUSTOMISATIONS DU CONTEXTE
+
 //var e1 = context.Employees.Single(e => e.EmployeeId == 1);
 //Console.WriteLine($"{e1.FirstName} {e1.LastName}");
 
@@ -191,3 +193,32 @@ using var context = new NorthwindContext();
 //{
 //    Console.WriteLine($"{d.Year} {d.Subtotal}");
 //}
+
+// ATTENTION A VERIFIER LE FILTRE GLOBAL
+// SEULEMENT SUR EMPLOYEE
+
+//foreach(var e in context.Employees)
+//{
+//    Console.WriteLine($"{e.FirstName} {e.LastName}");
+//}
+
+//foreach (var o in context.Orders)
+//{
+//    Console.WriteLine($"{o.CustomerId} {o.EmployeeId}");
+//}
+
+// ATTENTION A VERIFIER LE FILTRE GLOBAL
+// SEULEMENT SUR EMPLOYEE
+
+//foreach (var o in context.Orders.Include(o => o.Employee))
+//{
+//    Console.WriteLine($"{o.CustomerId} {o.EmployeeId} {o.Employee?.FirstName} {o.Employee?.LastName}");
+//}
+
+// ATTENTION A VERIFIER LE FILTRE GLOBAL
+// EMPLOYEE ET ORDER
+
+foreach (var o in context.Orders.Include(o => o.Employee))
+{
+    Console.WriteLine($"{o.CustomerId} {o.EmployeeId} {o.Employee?.FirstName} {o.Employee?.LastName}");
+}
