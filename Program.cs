@@ -1,5 +1,6 @@
 ﻿using Atelier.Ef.Query.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 using var context = new NorthwindContext();
@@ -218,7 +219,21 @@ using var context = new NorthwindContext();
 // ATTENTION A VERIFIER LE FILTRE GLOBAL
 // EMPLOYEE ET ORDER
 
-foreach (var o in context.Orders.Include(o => o.Employee))
+//foreach (var o in context.Orders.Include(o => o.Employee))
+//{
+//    Console.WriteLine($"{o.CustomerId} {o.EmployeeId} {o.Employee?.FirstName} {o.Employee?.LastName}");
+//}
+
+var sw1 = Stopwatch.StartNew();
+foreach (var p in context.OrderDetails)
 {
-    Console.WriteLine($"{o.CustomerId} {o.EmployeeId} {o.Employee?.FirstName} {o.Employee?.LastName}");
+    p.UnitPrice = p.UnitPrice * 1.05m;
 }
+context.SaveChanges();
+Console.WriteLine($"Load, modify, savechanges : {sw1.Elapsed}");
+
+var sw2 = Stopwatch.StartNew();
+context.OrderDetails.ExecuteUpdate(
+    setters => setters.SetProperty(
+        b => b.UnitPrice, b => b.UnitPrice * 1.05m));
+Console.WriteLine($"ExecuteUpdate : {sw2.Elapsed}");
